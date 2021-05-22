@@ -1,4 +1,5 @@
 #include "GameMain.h"
+#include <iostream>
 
 GameMain::GameMain(): _window(sf::VideoMode(1200, 1200), "SFML works!") {
     _window.setFramerateLimit(3);
@@ -26,8 +27,23 @@ void GameMain::eventHandler() {
     sf::Event event;
     while (_window.pollEvent(event))
     {
-        if (event.type == sf::Event::Closed)
-            _window.close();
+        switch (event.type) {
+            case sf::Event::Closed:
+                _window.close();
+                break;
+            case sf::Event::MouseButtonPressed :
+                if(event.mouseButton.button == sf::Mouse::Left) {
+                    sf::Vector2f hitVec(event.mouseButton.x, event.mouseButton.y);
+                    for(int x = 0 ; x < rowCount ; ++x)
+                        for (int y = 0; y < rowCount; ++y) {
+                            Node &node = _world[x][y];
+                            const sf::FloatRect &nodeBounds = node.getGlobalBounds();
+                            if(nodeBounds.contains(hitVec))
+                                node.activate();
+                        }
+                }
+                break;
+        }
     }
 }
 
@@ -42,4 +58,4 @@ void GameMain::updateDisplay() {
 void GameMain::updateGame() {
 }
 
-int GameMain::rowCount = 50;
+int GameMain::rowCount = 80;
