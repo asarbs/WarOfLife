@@ -11,9 +11,10 @@ class GameMain
         void mainGameLoop();
     protected:
     private:
-        sf::RenderWindow window;
-        sf::RectangleShape rectangle;
-        Node** world;
+        sf::RenderWindow _window;
+
+        static int rowCount;
+        Node** _world;
 
     void updateGame();
 

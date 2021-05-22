@@ -5,9 +5,13 @@
 #ifndef WAROFLIFE_NODE_H
 #define WAROFLIFE_NODE_H
 
+#include <SFML/Graphics.hpp>
 
-class Node {
-
+class Node: public sf::RectangleShape {
+    public:
+        Node(sf::Color color =  sf::Color::Yellow);
+    protected:
+    private:
 };
 
 

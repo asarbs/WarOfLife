@@ -1,13 +1,21 @@
 #include "GameMain.h"
 
-GameMain::GameMain(): window(sf::VideoMode(1200, 1200), "SFML works!"), rectangle(sf::Vector2f(120.f, 50.f)) {
-    window.setFramerateLimit(3);
-    rectangle.setFillColor(sf::Color::Green);
-    rectangle.setPosition(sf::Vector2f(50.f, 50.f));
+GameMain::GameMain(): _window(sf::VideoMode(1200, 1200), "SFML works!") {
+    _window.setFramerateLimit(3);
+
+    _world = new Node*[rowCount];
+    for(int i = 0; i < rowCount; ++i) {
+        _world[i] = new Node[rowCount];
+    }
+
+    for(int x = 0 ; x < rowCount ; ++x)
+        for(int y = 0 ; y < rowCount ; ++y)
+            _world[x][y].setPosition(x * 11.0, y * 11.0);
+
 }
 
 void GameMain::mainGameLoop() {
-    while (window.isOpen()) {
+    while (_window.isOpen()) {
         eventHandler();
         updateGame();
         updateDisplay();
@@ -16,19 +24,22 @@ void GameMain::mainGameLoop() {
 
 void GameMain::eventHandler() {
     sf::Event event;
-    while (window.pollEvent(event))
+    while (_window.pollEvent(event))
     {
         if (event.type == sf::Event::Closed)
-            window.close();
+            _window.close();
     }
 }
 
 void GameMain::updateDisplay() {
-    window.clear();
-    window.draw(rectangle);
-    window.display();
+    _window.clear();
+    for(int x = 0 ; x < rowCount ; ++x)
+        for(int y = 0 ; y < rowCount ; ++y)
+            _window.draw(_world[x][y]);
+    _window.display();
 }
 
 void GameMain::updateGame() {
-    rectangle.move(sf::Vector2f(10.f, 10.f));
 }
+
+int GameMain::rowCount = 50;
