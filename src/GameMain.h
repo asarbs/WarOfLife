@@ -2,6 +2,7 @@
 #define GAMEMAIN_H_INCLUDED
 
 #include <SFML/Graphics.hpp>
+#include "Node.h"
 
 class GameMain
 {
@@ -10,7 +11,15 @@ class GameMain
         void mainGameLoop();
     protected:
     private:
+        sf::RenderWindow window;
+        sf::RectangleShape rectangle;
+        Node** world;
 
+    void updateGame();
+
+    void updateDisplay();
+
+    void eventHandler();
 };
 
 #endif // GAMEMAIN_H_INCLUDED
