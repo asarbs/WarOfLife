@@ -13,8 +13,9 @@ class GameMain
     private:
         sf::RenderWindow _window;
 
-        static int worldSize;
-        Node** _world;
+        static int _worldSize;
+        Node** _world1;
+        Node** _world2;
         int* prev;
         int* next;
 
@@ -23,6 +24,14 @@ class GameMain
     void updateDisplay();
 
     void eventHandler();
+
+    int _calculateNumberOfAliveNeighbors(int x, int y);
+
+    bool _inEditStare;
+
+    void switchEditMode();
+
+    void resetWorld();
 };
 
 #endif // GAMEMAIN_H_INCLUDED

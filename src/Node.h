@@ -11,8 +11,16 @@ class Node: public sf::RectangleShape {
     public:
         Node(sf::Color color =  sf::Color::Yellow);
         void activate();
-    protected:
+
+    int isAlive();
+
+    void alive();
+
+    void die();
+
+protected:
     private:
+        bool _state;
 };
 
 
