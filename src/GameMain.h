@@ -13,8 +13,10 @@ class GameMain
     private:
         sf::RenderWindow _window;
 
-        static int rowCount;
+        static int worldSize;
         Node** _world;
+        int* prev;
+        int* next;
 
     void updateGame();
 

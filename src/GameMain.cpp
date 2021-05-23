@@ -4,13 +4,22 @@
 GameMain::GameMain(): _window(sf::VideoMode(1200, 1200), "SFML works!") {
     _window.setFramerateLimit(3);
 
-    _world = new Node*[rowCount];
-    for(int i = 0; i < rowCount; ++i) {
-        _world[i] = new Node[rowCount];
+    _world = new Node*[worldSize];
+    prev = new int[worldSize];
+    next = new int[worldSize];
+
+    for(int i = 0; i < worldSize; ++i) {
+        _world[i] = new Node[worldSize];
+        prev[i] = i - 1;
+        next[i] = i + 1;
     }
 
-    for(int x = 0 ; x < rowCount ; ++x)
-        for(int y = 0 ; y < rowCount ; ++y)
+    prev[0] = worldSize - 1;
+    prev[worldSize - 1] = worldSize - 2;
+    next[worldSize - 1] = 0;
+
+    for(int x = 0 ; x < worldSize ; ++x)
+        for(int y = 0 ; y < worldSize ; ++y)
             _world[x][y].setPosition(x * 11.0, y * 11.0);
 
 }
@@ -34,8 +43,8 @@ void GameMain::eventHandler() {
             case sf::Event::MouseButtonPressed :
                 if(event.mouseButton.button == sf::Mouse::Left) {
                     sf::Vector2f hitVec(event.mouseButton.x, event.mouseButton.y);
-                    for(int x = 0 ; x < rowCount ; ++x)
-                        for (int y = 0; y < rowCount; ++y) {
+                    for(int x = 0 ; x < worldSize ; ++x)
+                        for (int y = 0; y < worldSize; ++y) {
                             Node &node = _world[x][y];
                             const sf::FloatRect &nodeBounds = node.getGlobalBounds();
                             if(nodeBounds.contains(hitVec))
@@ -49,8 +58,8 @@ void GameMain::eventHandler() {
 
 void GameMain::updateDisplay() {
     _window.clear();
-    for(int x = 0 ; x < rowCount ; ++x)
-        for(int y = 0 ; y < rowCount ; ++y)
+    for(int x = 0 ; x < worldSize ; ++x)
+        for(int y = 0 ; y < worldSize ; ++y)
             _window.draw(_world[x][y]);
     _window.display();
 }
@@ -58,4 +67,4 @@ void GameMain::updateDisplay() {
 void GameMain::updateGame() {
 }
 
-int GameMain::rowCount = 80;
+int GameMain::worldSize = 80;
