@@ -9,5 +9,5 @@ Node::Node(sf::Color color): sf::RectangleShape(sf::Vector2f(10.f, 10.f)){
 }
 
 void Node::activate() {
-    setFillColor(sf::Color::Green);
+    setFillColor(sf::Color::Blue);
 }
