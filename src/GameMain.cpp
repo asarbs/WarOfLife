@@ -1,7 +1,7 @@
 #include "GameMain.h"
 #include <iostream>
 
-GameMain::GameMain(): _window(sf::VideoMode(1200, 1200), "SFML works!"), _inEditStare(true) {
+GameMain::GameMain(): _window(sf::VideoMode(1200, 1200), "SFML works!"), _inEditStare(true), _createOscillator(false) {
     _window.setFramerateLimit(30);
     ImGui::SFML::Init(_window);
 
@@ -47,6 +47,7 @@ void GameMain::eventHandler() {
             case sf::Event::KeyPressed:
                 switchEditMode();
                 resetWorld();
+                addPredefinedPattern();
             case sf::Event::MouseButtonPressed :
                 createAliveCell(event);
                 break;
@@ -59,10 +60,21 @@ void GameMain::createAliveCell(const sf::Event &event) const {
         sf::Vector2f hitVec(event.mouseButton.x, event.mouseButton.y);
         for(int x = 0 ; x < _worldSize ; ++x)
             for (int y = 0; y < _worldSize; ++y) {
-                Node &node1 = _world1[x][y];
-                const sf::FloatRect &nodeBounds = node1.getGlobalBounds();
-                if(nodeBounds.contains(hitVec)) {
-                    node1.alive();
+                if(_createOscillator) {
+                    Node &node = _world1[x][y];
+                    const sf::FloatRect &nodeBounds = node.getGlobalBounds();
+                    if(nodeBounds.contains(hitVec)) {
+                        _world1[x][y-1].alive();
+                        _world1[x][y].alive();
+                        _world1[x][y+1].alive();
+                    }
+                }
+                else {
+                    Node &node1 = _world1[x][y];
+                    const sf::FloatRect &nodeBounds = node1.getGlobalBounds();
+                    if(nodeBounds.contains(hitVec)) {
+                        node1.alive();
+                    }
                 }
             }
     }
@@ -80,6 +92,12 @@ void GameMain::resetWorld() {
 void GameMain::switchEditMode() {
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::P)) {
         _inEditStare = !_inEditStare;
+    }
+}
+
+void GameMain::addPredefinedPattern() {
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::F1)) {
+        _createOscillator = true;
     }
 }
 

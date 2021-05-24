@@ -21,6 +21,8 @@ class GameMain
         Node** _world2;
         int* prev;
         int* next;
+        bool _inEditStare;
+        bool _createOscillator;
 
     void updateGame();
 
@@ -30,13 +32,14 @@ class GameMain
 
     int _calculateNumberOfAliveNeighbors(int x, int y);
 
-    bool _inEditStare;
-
     void switchEditMode();
 
     void resetWorld();
 
     void createAliveCell(const sf::Event &event) const;
+
+    void addPredefinedPattern();
+
 };
 
 #endif // GAMEMAIN_H_INCLUDED
