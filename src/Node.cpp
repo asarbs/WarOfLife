@@ -4,7 +4,7 @@
 
 #include "Node.h"
 
-Node::Node(sf::Color color): sf::RectangleShape(sf::Vector2f(10.f, 10.f)), _state(false) {
+Node::Node(sf::Color color): sf::RectangleShape(sf::Vector2f(5.f, 5.f)), _state(false) {
     setFillColor(color);
 }
 

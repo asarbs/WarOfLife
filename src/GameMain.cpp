@@ -23,8 +23,8 @@ GameMain::GameMain(): _window(sf::VideoMode(1200, 1200), "SFML works!"), _inEdit
 
     for(int x = 0 ; x < _worldSize ; ++x)
         for(int y = 0 ; y < _worldSize ; ++y) {
-            _world1[x][y].setPosition(x * 11.0, y * 11.0);
-            _world2[x][y].setPosition(x * 11.0, y * 11.0);
+            _world1[x][y].setPosition(x * 6.0, y * 6.0);
+            _world2[x][y].setPosition(x * 6.0, y * 6.0);
         }
 }
 
@@ -64,9 +64,42 @@ void GameMain::createAliveCell(const sf::Event &event) const {
                     Node &node = _world1[x][y];
                     const sf::FloatRect &nodeBounds = node.getGlobalBounds();
                     if(nodeBounds.contains(hitVec)) {
-                        _world1[x][y-1].alive();
-                        _world1[x][y].alive();
-                        _world1[x][y+1].alive();
+                        _world1[x][y+5].alive();
+                        _world1[x+1][y+5].alive();
+                        _world1[x][y+6].alive();
+                        _world1[x+1][y+6].alive();
+                        _world1[x+11][y+2].alive();
+                        _world1[x+11][y+3].alive();
+                        _world1[x+11][y+7].alive();
+                        _world1[x+11][y+8].alive();
+                        _world1[x+13][y+3].alive();
+                        _world1[x+13][y+7].alive();
+                        _world1[x+14][y+4].alive();
+                        _world1[x+14][y+5].alive();
+                        _world1[x+14][y+6].alive();
+                        _world1[x+15][y+4].alive();
+                        _world1[x+15][y+5].alive();
+                        _world1[x+15][y+6].alive();
+                        _world1[x+18][y+3].alive();
+                        _world1[x+19][y+2].alive();
+                        _world1[x+19][y+3].alive();
+                        _world1[x+19][y+4].alive();
+                        _world1[x+20][y+1].alive();
+                        _world1[x+20][y+5].alive();
+                        _world1[x+21][y+3].alive();
+                        _world1[x+22][y+0].alive();
+                        _world1[x+22][y+6].alive();
+                        _world1[x+23][y+0].alive();
+                        _world1[x+23][y+6].alive();
+                        _world1[x+24][y+1].alive();
+                        _world1[x+24][y+5].alive();
+                        _world1[x+25][y+2].alive();
+                        _world1[x+25][y+3].alive();
+                        _world1[x+25][y+4].alive();
+                        _world1[x+34][y+3].alive();
+                        _world1[x+34][y+4].alive();
+                        _world1[x+35][y+3].alive();
+                        _world1[x+35][y+4].alive();
                     }
                 }
                 else {
@@ -133,7 +166,7 @@ void GameMain::updateGame() {
     _world2 = tmp;
 }
 
-int GameMain::_worldSize = 100;
+int GameMain::_worldSize = 150;
 
 /*
  *  cell1=(x-1,y-1) | cell2=(x-1, y ) | cell3=(x-1,y+1)
