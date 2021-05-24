@@ -1,5 +1,6 @@
 [requires]
 sfml/2.5.1@bincrafters/stable
+imgui/1.82
 
 [options]
 sfml:graphics=True

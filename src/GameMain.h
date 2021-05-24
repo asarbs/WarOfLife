@@ -32,6 +32,8 @@ class GameMain
     void switchEditMode();
 
     void resetWorld();
+
+    void createAliveCell(const sf::Event &event) const;
 };
 
 #endif // GAMEMAIN_H_INCLUDED

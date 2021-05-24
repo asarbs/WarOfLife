@@ -37,8 +37,7 @@ void GameMain::mainGameLoop() {
 
 void GameMain::eventHandler() {
     sf::Event event;
-    while (_window.pollEvent(event))
-    {
+    while (_window.pollEvent(event)) {
         switch (event.type) {
             case sf::Event::Closed:
                 _window.close();
@@ -47,19 +46,23 @@ void GameMain::eventHandler() {
                 switchEditMode();
                 resetWorld();
             case sf::Event::MouseButtonPressed :
-                if(event.mouseButton.button == sf::Mouse::Left) {
-                    sf::Vector2f hitVec(event.mouseButton.x, event.mouseButton.y);
-                    for(int x = 0 ; x < _worldSize ; ++x)
-                        for (int y = 0; y < _worldSize; ++y) {
-                            Node &node1 = _world1[x][y];
-                            const sf::FloatRect &nodeBounds = node1.getGlobalBounds();
-                            if(nodeBounds.contains(hitVec)) {
-                                node1.alive();
-                            }
-                        }
-                }
+                createAliveCell(event);
                 break;
         }
+    }
+}
+
+void GameMain::createAliveCell(const sf::Event &event) const {
+    if(event.mouseButton.button == sf::Mouse::Left) {
+        sf::Vector2f hitVec(event.mouseButton.x, event.mouseButton.y);
+        for(int x = 0 ; x < _worldSize ; ++x)
+            for (int y = 0; y < _worldSize; ++y) {
+                Node &node1 = _world1[x][y];
+                const sf::FloatRect &nodeBounds = node1.getGlobalBounds();
+                if(nodeBounds.contains(hitVec)) {
+                    node1.alive();
+                }
+            }
     }
 }
 
