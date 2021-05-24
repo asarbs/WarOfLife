@@ -2,6 +2,8 @@
 #define GAMEMAIN_H_INCLUDED
 
 #include <SFML/Graphics.hpp>
+#include <imgui.h>
+#include <imgui-SFML.h>
 #include "Node.h"
 
 class GameMain
@@ -12,6 +14,7 @@ class GameMain
     protected:
     private:
         sf::RenderWindow _window;
+        sf::Clock _deltaClock;
 
         static int _worldSize;
         Node** _world1;

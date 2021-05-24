@@ -3,6 +3,7 @@
 
 GameMain::GameMain(): _window(sf::VideoMode(1200, 1200), "SFML works!"), _inEditStare(true) {
     _window.setFramerateLimit(30);
+    ImGui::SFML::Init(_window);
 
     _world1 = new Node*[_worldSize];
     _world2 = new Node*[_worldSize];
@@ -33,6 +34,7 @@ void GameMain::mainGameLoop() {
         updateGame();
         updateDisplay();
     }
+    ImGui::SFML::Shutdown();
 }
 
 void GameMain::eventHandler() {
@@ -82,10 +84,14 @@ void GameMain::switchEditMode() {
 }
 
 void GameMain::updateDisplay() {
+    ImGui::SFML::Update(_window, _deltaClock.restart());
+    ImGui::Begin("Sample window");
+    ImGui::End();
     _window.clear();
     for(int x = 0 ; x < _worldSize ; ++x)
         for(int y = 0 ; y < _worldSize ; ++y)
             _window.draw(_world1[x][y]);
+    ImGui::Render();
     _window.display();
 }
 
