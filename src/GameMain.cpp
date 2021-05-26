@@ -1,8 +1,9 @@
 #include "GameMain.h"
 #include <iostream>
 
-GameMain::GameMain(): _window(sf::VideoMode(1200, 1200), "SFML works!"), _inEditStare(true), _createOscillator(false) {
+GameMain::GameMain(): _window(sf::VideoMode(1200, 1200), _windowTitle), _inEditStare(true), _createOscillator(false) {
     _window.setFramerateLimit(30);
+    _window.setVerticalSyncEnabled(true);
     ImGui::SFML::Init(_window);
 
     _world1 = new Node*[_worldSize];
@@ -34,12 +35,12 @@ void GameMain::mainGameLoop() {
         updateGame();
         updateDisplay();
     }
-    ImGui::SFML::Shutdown();
 }
 
 void GameMain::eventHandler() {
     sf::Event event;
     while (_window.pollEvent(event)) {
+        ImGui::SFML::ProcessEvent(event);
         switch (event.type) {
             case sf::Event::Closed:
                 _window.close();
@@ -136,13 +137,37 @@ void GameMain::addPredefinedPattern() {
 
 void GameMain::updateDisplay() {
     ImGui::SFML::Update(_window, _deltaClock.restart());
-    ImGui::Begin("Sample window");
-    ImGui::End();
-    _window.clear();
+    _window.clear(_bgColor);
     for(int x = 0 ; x < _worldSize ; ++x)
         for(int y = 0 ; y < _worldSize ; ++y)
             _window.draw(_world1[x][y]);
-    ImGui::Render();
+
+    ImGui::Begin("Sample window");
+
+    ImGui::Begin("Sample window"); // begin window
+
+    // Background _color edit
+    if (ImGui::ColorEdit3("Background _color", _color)) {
+        // this code gets called if _color value changes, so
+        // the background _color is upgraded automatically!
+        _bgColor.r = static_cast<sf::Uint8>(_color[0] * 255.f);
+        _bgColor.g = static_cast<sf::Uint8>(_color[1] * 255.f);
+        _bgColor.b = static_cast<sf::Uint8>(_color[2] * 255.f);
+    }
+
+    // Window title text edit
+    ImGui::InputText("Window title", _windowTitle, 255);
+
+    if (ImGui::Button("Update window title")) {
+        // this code gets if user clicks on the button
+        // yes, you could have written if(ImGui::InputText(...))
+        // but I do this to show how buttons work :)
+        _window.setTitle(_windowTitle);
+    }
+
+    ImGui::End();
+
+    ImGui::SFML::Render(_window);
     _window.display();
 }
 
@@ -185,4 +210,8 @@ int GameMain::_calculateNumberOfAliveNeighbors(int x, int y) {
     Node& cell7 = _world1[next[x]][y];
     Node& cell8 = _world1[next[x]][next[y]];
     return cell1.isAlive() + cell2.isAlive() + cell3.isAlive() + cell4.isAlive() + cell5.isAlive() + cell6.isAlive() + cell7.isAlive() + cell8.isAlive();
+}
+
+GameMain::~GameMain() {
+    ImGui::SFML::Shutdown();
 }

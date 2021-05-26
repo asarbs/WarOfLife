@@ -10,6 +10,7 @@ class GameMain
 {
     public:
         GameMain();
+        ~GameMain();
         void mainGameLoop();
     protected:
     private:
@@ -23,6 +24,10 @@ class GameMain
         int* next;
         bool _inEditStare;
         bool _createOscillator;
+
+        sf::Color _bgColor;
+        float _color[3] = {0.f, 0.f, 0.f };
+        char _windowTitle[255] = "ImGui + SFML = <3";
 
     void updateGame();
 
