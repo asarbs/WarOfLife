@@ -1,5 +1,6 @@
 #include "GameMain.h"
 #include "GosperGliderGun.h"
+#include "Glider.h"
 #include <iostream>
 
 GameMain::GameMain(): _window(sf::VideoMode(1200, 1200), _windowTitle), _inEditStare(true), _createOscillator(false) {
@@ -66,7 +67,7 @@ void GameMain::createAliveCell(const sf::Event &event) const {
                     Node &node = _world1[x][y];
                     const sf::FloatRect &nodeBounds = node.getGlobalBounds();
                     if(nodeBounds.contains(hitVec)) {
-                        GosperGliderGun ggg;
+                        Glider ggg;
                         auto nodeList = ggg.getNodeList();
                         for(auto pair : nodeList) {
                             _world1[x+pair.first][y+pair.second].alive();
