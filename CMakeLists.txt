@@ -7,7 +7,7 @@ set(CMAKE_CXX_FLAGS_RELEASE_INIT "-Wall")
 include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
 conan_basic_setup()
 
-add_library(WarOfLif_Lib src/GameMain.cpp src/Node.cpp src/Brush.cpp src/Brush.h src/GosperGliderGun.cpp src/GosperGliderGun.h)
+add_library(WarOfLif_Lib src/GameMain.cpp src/Node.cpp src/brush/Brush.cpp src/brush/Brush.h src/brush/GosperGliderGun.cpp src/brush/GosperGliderGun.h src/PlayerColor.h src/brush/Dot.cpp src/brush/Dot.h)
 
-add_executable(${PROJECT_NAME} src/main.cpp src/Glider.cpp src/Glider.h)
+add_executable(${PROJECT_NAME} src/main.cpp src/brush/Glider.cpp src/brush/Glider.h)
 target_link_libraries(${PROJECT_NAME} WarOfLif_Lib ${CONAN_LIBS})
